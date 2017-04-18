@@ -4,18 +4,21 @@ import { UIOverlay, UIRoutesManager } from '../ui';
 import { UIActions } from '../../actions';
 import overlayRegistry from '../../utilities/overlayRegistry';
 
+const getOverlayContent = componentName => (
+	componentName !== '' ? overlayRegistry[componentName]() : null
+);
+
 const App = ({ routes, openOverlay, ui }) => (
 	<div id="app">
 		<nav>
 			<ul>
-				<li><a onClick={openOverlay}>Steps Overlay</a></li>
+				<li><a onClick={openOverlay}>Sizing Guide</a></li>
 			</ul>
 		</nav>
 		<UIRoutesManager routes={routes} />
-		{ ui.overlay.active ?
-			<UIOverlay>{overlayRegistry[ui.overlay.component]}</UIOverlay>
-			: null
-		}
+		<UIOverlay active={ui.overlay.active}>
+			{getOverlayContent(ui.overlay.component)}
+		</UIOverlay>
 	</div>
 );
 
@@ -32,7 +35,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	openOverlay(e) {
 		e.preventDefault();
-		dispatch(UIActions.activateOverlay('GuideSteps'));
+		dispatch(UIActions.activateOverlay('SizingHelp'));
 	},
 });
 

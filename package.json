@@ -8,9 +8,11 @@
     "immutable": "^3.8.1",
     "react": "15.4.2",
     "react-dom": "15.4.2",
+    "react-motion": "^0.4.8",
     "react-redux": "^5.0.3",
     "react-router-dom": "^4.0.0-beta.8",
     "react-router-redux": "^5.0.0-alpha.4",
+    "react-slick": "^0.14.8",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.0",
     "redux-saga": "^0.14.3"
@@ -28,7 +30,9 @@
     "eslint-config-airbnb-base": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-jsx-a11y": "*",
-    "eslint-plugin-react": "*"
+    "eslint-plugin-react": "*",
+    "file-loader": "^0.11.1",
+    "url-loader": "^0.5.8"
   },
   "private": true,
   "scripts": {

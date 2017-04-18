@@ -1,4 +1,5 @@
 import React from 'react';
+import './GuideSteps.styl';
 
 const GuideSteps = () => (
 	<div className="guide-steps">

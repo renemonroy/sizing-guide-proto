@@ -1,5 +1,5 @@
-import GuideSteps from './GuideSteps';
+import SizingHelp from './SizingHelp';
 
 export {
-	GuideSteps,
+	SizingHelp,
 };

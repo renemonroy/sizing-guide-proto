@@ -1,5 +1,7 @@
-import { GuideSteps } from '../components/sections';
+import { UIPlaceholder } from '../components/ui';
+import { SizingHelp } from '../components/sections';
 
 export default {
-	GuideSteps,
+	UIPlaceholder,
+	SizingHelp,
 };

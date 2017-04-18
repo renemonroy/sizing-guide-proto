@@ -11,7 +11,7 @@ export const activateOverlay = (state, component) => (
 );
 
 export const deactivateOverlay = state => (
-	state.mergeIn(['overlay'], fromJS({ active: false, component: '' }))
+	state.mergeIn(['overlay'], fromJS({ active: false }))
 );
 
 function UI(state = initialState, action) {

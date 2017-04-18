@@ -7,6 +7,7 @@ import App from './components/app';
 import mainSaga from './sagas';
 import configureStore from './utilities/configureStore';
 import configureRoutes from './utilities/configureRoutes';
+import './index.styl';
 
 const history = createHistory();
 const store = configureStore(history);
