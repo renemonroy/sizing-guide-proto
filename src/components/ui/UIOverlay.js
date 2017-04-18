@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { UIActions } from '../../actions';
-import './index.styl';
+import './UIOverlay.styl';
 
-const UIOverlay = ({ children, closeOverlay }) => (
+const UIOverlay = ({ children: OverlayContent, closeOverlay }) => (
 	<div className="ui-overlay">
 		<div
 			className="ui-overlay-background"
 			onClick={closeOverlay}
 		/>
 		<div className="ui-overlay-content">
-			{children}
+			<OverlayContent />
 		</div>
 	</div>
 );

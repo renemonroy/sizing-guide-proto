@@ -1,7 +1,5 @@
-import Home from './home';
-import About from './about';
+import HomeView from './HomeView';
 
 export default {
-	Home,
-	About,
+	HomeView,
 };

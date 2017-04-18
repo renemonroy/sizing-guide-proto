@@ -1,18 +1,12 @@
-import views from '../components/views';
+import { HomeView } from '../components/views';
 
 export default () => (
 	[
 		{
 			path: '/',
 			exact: true,
-			component: views.Home,
+			component: HomeView,
 			key: 'home-view',
-		},
-		{
-			path: '/about',
-			exact: true,
-			component: views.About,
-			key: 'about-view',
 		},
 	]
 );

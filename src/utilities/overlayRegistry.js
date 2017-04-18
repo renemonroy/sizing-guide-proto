@@ -1,4 +1,4 @@
-import GuideSteps from '../components/guide-steps';
+import { GuideSteps } from '../components/sections';
 
 export default {
 	GuideSteps,

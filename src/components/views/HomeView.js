@@ -1,6 +1,6 @@
 import React from 'react';
-import UIView from '../../ui-view';
-import './index.styl';
+import { UIView } from '../ui';
+import './HomeView.styl';
 
 const HomeView = () => (
 	<UIView name="home-view">

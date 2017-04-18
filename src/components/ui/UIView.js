@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import './index.styl';
+import './UIView.styl';
 
 const UIView = ({ name, children }) => (
 	<div className={`ui-view ${name}`}>
