@@ -1,4 +1,4 @@
-import { HomeView } from '../components/views';
+import { HomeView, SizingGuideView } from '../components/views';
 
 export default () => (
 	[
@@ -7,6 +7,11 @@ export default () => (
 			exact: true,
 			component: HomeView,
 			key: 'home-view',
+		},
+		{
+			path: '/sizing-guide',
+			component: SizingGuideView,
+			key: 'sizing-guide-view',
 		},
 	]
 );

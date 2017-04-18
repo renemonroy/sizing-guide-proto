@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { UIView } from '../ui';
+import { mapDispatchToProps } from '../../utilities/mapPropsHelpers';
 import './HomeView.styl';
 
-const HomeView = () => (
+const HomeView = ({ uiDispatch }) => (
 	<UIView name="home-view">
-		<h1>Home view</h1>
+		<nav>
+			<ul>
+				<li><a onClick={uiDispatch.openOverlay}>Sizing Guide</a></li>
+			</ul>
+		</nav>
 	</UIView>
 );
 
-export default HomeView;
+HomeView.propTypes = {
+	uiDispatch: PropTypes.object.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(HomeView);

@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import { UIRoute } from '../ui';
 
 const UIRoutesManager = ({ routes }) => (
 	<Switch>
 		{routes.map(route => (
-			<Route {...route} />
+			<UIRoute {...route} />
 		))}
 	</Switch>
 );

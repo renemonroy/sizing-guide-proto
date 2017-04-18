@@ -1,5 +1,7 @@
 import HomeView from './HomeView';
+import SizingGuideView from './SizingGuideView';
 
-export default {
+export {
 	HomeView,
+	SizingGuideView,
 };
