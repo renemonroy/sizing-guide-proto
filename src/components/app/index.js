@@ -8,18 +8,18 @@ const getOverlayContent = componentName => (
 	componentName !== '' ? overlayRegistry[componentName]() : null
 );
 
-const App = ({ routes, uiState }) => (
+const App = props => (
 	<div id="app">
-		<UIRoutesManager routes={routes} />
-		<UIOverlay active={uiState.overlay.active}>
-			{getOverlayContent(uiState.overlay.component)}
+		<UIRoutesManager location={props.location} />
+		<UIOverlay active={props.uiState.overlay.active}>
+			{getOverlayContent(props.uiState.overlay.component)}
 		</UIOverlay>
 	</div>
 );
 
 App.propTypes = {
-	routes: PropTypes.array.isRequired,
 	uiState: PropTypes.object.isRequired,
+	location: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

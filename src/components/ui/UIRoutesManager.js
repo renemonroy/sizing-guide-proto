@@ -1,21 +1,22 @@
-import React, { PropTypes } from 'react';
-import { Switch } from 'react-router-dom';
-import { UIRoute } from '../ui';
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from '../../utilities/mapPropsHelpers';
+import routes from '../../utilities/routes';
 
-const UIRoutesManager = ({ routes }) => (
+const UIRoutesManager = props => (
 	<Switch>
-		{routes.map(route => (
-			<UIRoute {...route} />
+		{routes.map(({ key, path, component: Component, exact }) => (
+			<Route
+				key={key}
+				path={path}
+				exact={exact}
+				render={ps => (
+					<Component {...(Object.assign({}, ps, props))} />
+				)}
+			/>
 		))}
 	</Switch>
 );
 
-UIRoutesManager.propTypes = {
-	routes: PropTypes.array.isRequired,
-};
-
-UIRoutesManager.defaultProps = {
-	routes: [],
-};
-
-export default UIRoutesManager;
+export default connect(mapStateToProps, mapDispatchToProps)(UIRoutesManager);

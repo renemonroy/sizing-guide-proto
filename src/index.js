@@ -1,25 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import createHistory from 'history/createBrowserHistory';
-import { ConnectedRouter } from 'react-router-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from './components/app';
 import mainSaga from './sagas';
 import configureStore from './utilities/configureStore';
-import configureRoutes from './utilities/configureRoutes';
 import './index.styl';
 
-const history = createHistory();
-const store = configureStore(history);
-const routes = configureRoutes();
+const store = configureStore();
 store.runSaga(mainSaga);
 
 document.addEventListener('DOMContentLoaded', () => {
 	ReactDOM.render(
 		<Provider store={store}>
-			<ConnectedRouter history={history}>
-				<App routes={routes} />
-			</ConnectedRouter>
+			<Router>
+				<Route component={App} />
+			</Router>
 		</Provider>,
 		document.getElementById('root'),
   );

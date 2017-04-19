@@ -1,4 +1,3 @@
-import { push } from 'react-router-redux';
 import { UIActions } from '../actions';
 
 let isSizingHelpShown = false;
@@ -6,8 +5,7 @@ let isSizingHelpShown = false;
 export const mapDispatchToProps = dispatch => ({
 	uiDispatch: {
 		openOverlay(e) {
-			e.preventDefault();
-			dispatch(push('/sizing-guide'));
+			if (e) e.preventDefault();
 			if (!isSizingHelpShown) {
 				dispatch(UIActions.activateOverlay('SizingHelp'));
 				isSizingHelpShown = true;
