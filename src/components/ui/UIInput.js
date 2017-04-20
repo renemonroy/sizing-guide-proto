@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import { TransitionMotion, spring } from 'react-motion';
 import UICursor from './UICursor';
 import UICharacter from './UICharacter';
 import cx from '../../utilities/className';
+import { easeOut } from '../../constants/SpringPresets';
 import './UIInput.styl';
 
 class UIInput extends Component {
@@ -20,6 +22,24 @@ class UIInput extends Component {
 
 	componentWillUnmount() {
 		document.removeEventListener('click', this.handleTextzoneUnfocus);
+	}
+
+	getDefaultCharacterStyles() {
+		const { characters } = this.state;
+		return characters.map(character => ({
+			key: `ui-char-${character}`,
+			style: { opacity: 1 },
+			data: { value: character },
+		}));
+	}
+
+	getCharacterStyles() {
+		const { characters } = this.state;
+		return characters.map(character => ({
+			key: `ui-char-${character}`,
+			style: { opacity: spring(1, easeOut) },
+			data: { value: character },
+		}));
 	}
 
 	handleTextzoneClick(e) {
@@ -46,7 +66,7 @@ class UIInput extends Component {
 		}
 		this.setState({
 			isFocused: true,
-			cursorIndex: characters.length + 1,
+			cursorIndex: characters.length,
 		});
 	}
 
@@ -97,34 +117,41 @@ class UIInput extends Component {
 		return this.validHandlers.some(handler => handler === el);
 	}
 
-	renderInputValue(state) {
-		const { isFocused, cursorIndex, characters } = state;
-		const inputValue = characters.map((char, i) => (
-			<UICharacter
-				key={`ui-char-${char}${i}`}
-				onRef={(characterEl) => { this.validHandlers.push(characterEl); }}
-				onClick={e => this.handleCharacterClick(e, i)}
-				value={char}
-			/>
-		));
-		if (isFocused) {
-			inputValue.splice(cursorIndex, 0, <UICursor key="ui-cursor" />);
-		}
-		return inputValue;
-	}
-
 	render() {
+		const { className, ...rest } = this.props;
+		const { isFocused, cursorIndex } = this.state;
 		this.validHandlers = [];
 		this.validHandlers.length = 0;
 		return (
-			<div {...this.props} className={cx(['ui-input', this.props.className])}>
-				<div
-					ref={(textzoneEl) => { this.validHandlers.push(textzoneEl); }}
-					className="ui-input-textzone"
-					onClick={this.handleTextzoneClick}
+			<div {...rest} className={cx(['ui-input', this.props.className])}>
+				<TransitionMotion
+					willEnter={() => ({ opacity: 0 })}
+					styles={this.getCharacterStyles()}
+					defaultStyles={this.getDefaultCharacterStyles()}
 				>
-					{this.renderInputValue(this.state)}
-				</div>
+					{styles => (
+						<div
+							ref={(textzoneEl) => { this.validHandlers.push(textzoneEl); }}
+							className="ui-input-textzone"
+							onClick={this.handleTextzoneClick}
+						>
+							{styles.map(({ key, style, data: { value } }, i) => (
+								[
+									isFocused && cursorIndex === i ? <UICursor key={`ui-cursor-${i}`} /> : null,
+									<UICharacter
+										key={key}
+										style={style}
+										onRef={(characterEl) => { this.validHandlers.push(characterEl); }}
+										onClick={e => this.handleCharacterClick(e, i)}
+										value={value}
+									/>,
+									isFocused && i === (styles.length - 1) && cursorIndex === styles.length ?
+										<UICursor key={`ui-cursor-${i}`} /> : null,
+								]
+							))}
+						</div>
+					)}
+				</TransitionMotion>
 			</div>
 		);
 	}
