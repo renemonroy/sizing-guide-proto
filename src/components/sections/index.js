@@ -1,5 +1,7 @@
-import SizingHelp from './SizingHelp';
+import SizingBox from './SizingBox';
+import SizingSteps from './SizingSteps';
 
 export {
-	SizingHelp,
+	SizingBox,
+	SizingSteps,
 };

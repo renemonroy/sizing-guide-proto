@@ -41,6 +41,7 @@
     "no-constant-condition": [0],
     "no-empty-label": [0],
     "no-new": [0],
+    "react/no-array-index-key": [0],
     "react/jsx-filename-extension": [0],
     "react/forbid-prop-types": [0],
     "react/jsx-boolean-value": [0],

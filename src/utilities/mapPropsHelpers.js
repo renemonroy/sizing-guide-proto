@@ -7,7 +7,7 @@ export const mapDispatchToProps = dispatch => ({
 		openOverlay(e) {
 			if (e) e.preventDefault();
 			if (!isSizingHelpShown) {
-				dispatch(UIActions.activateOverlay('SizingHelp'));
+				dispatch(UIActions.activateOverlay('SizingSteps'));
 				isSizingHelpShown = true;
 			}
 		},

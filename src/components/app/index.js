@@ -10,8 +10,8 @@ const getOverlayContent = componentName => (
 
 const App = props => (
 	<div id="app">
-		<UIRoutesManager location={props.location} />
-		<UIOverlay active={props.uiState.overlay.active}>
+		<UIRoutesManager {...props.location} />
+		<UIOverlay {...props.uiState.overlay}>
 			{getOverlayContent(props.uiState.overlay.component)}
 		</UIOverlay>
 	</div>

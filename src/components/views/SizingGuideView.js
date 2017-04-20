@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { UIView } from '../ui';
+import { SizingBox } from '../sections';
 import './SizingGuideView.styl';
 
 let isSizingHelpShown = false;
@@ -14,7 +15,7 @@ class SizingGuideView extends Component {
 	render() {
 		return (
 			<UIView name="sizing-guide-view">
-				<h1>Sizing Guide View</h1>
+				<SizingBox />
 			</UIView>
 		);
 	}

@@ -1,8 +1,8 @@
 import React from 'react';
 import Slider from 'react-slick';
-import './SizingHelp.styl';
+import './SizingSteps.styl';
 
-const SizingHelp = () => {
+const SizingSteps = () => {
 	const settings = {
 		dots: true,
 		infinite: false,
@@ -11,7 +11,7 @@ const SizingHelp = () => {
 		slidesToScroll: 1,
 	};
 	return (
-		<div className="sizing-help">
+		<div className="sizing-steps">
 			<Slider {...settings}>
 				<div className="sizing-step-container step-1">
 					<div className="sizing-step">
@@ -45,4 +45,4 @@ const SizingHelp = () => {
 	);
 };
 
-export default SizingHelp;
+export default SizingSteps;
