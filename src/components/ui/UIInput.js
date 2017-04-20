@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import UICursor from './UICursor';
+import UICharacter from './UICharacter';
 import cx from '../../utilities/className';
 import './UIInput.styl';
 
@@ -9,18 +10,12 @@ class UIInput extends Component {
 		super(props);
 		this.state = {
 			isFocused: false,
-			characters: ['6', '2'],
+			characters: ['6', '2', '.', '9'],
 			cursorIndex: 0,
 		};
 		this.handleTextzoneClick = this.handleTextzoneClick.bind(this);
 		this.handleTextzoneUnfocus = this.handleTextzoneUnfocus.bind(this);
 		this.handleCharacterClick = this.handleCharacterClick.bind(this);
-	}
-
-	componentDidMount() {
-		setTimeout(() => {
-			this.write('a');
-		}, 5000);
 	}
 
 	componentWillUnmount() {
@@ -65,15 +60,30 @@ class UIInput extends Component {
 	write(character) {
 		const { isFocused, cursorIndex, characters } = this.state;
 		let characterIndex = characters.length;
+		let newCharacters = null;
 		if (isFocused) {
 			characterIndex = cursorIndex;
 		}
-		const newCharacters = characters.slice();
+		newCharacters = characters.slice();
 		newCharacters.splice(characterIndex, 0, character);
 		this.setState({
 			characters: newCharacters,
 			cursorIndex: characterIndex + 1,
 		});
+	}
+
+	erase(charIndex, numOfChars = 1) {
+		const { isFocused, cursorIndex, characters } = this.state;
+		const characterIndex = isFocused ? cursorIndex - 1 : charIndex;
+		let newCharacters = null;
+		if (characters.length > 0) {
+			newCharacters = characters.slice();
+			newCharacters.splice(characterIndex, numOfChars);
+			this.setState({
+				characters: newCharacters,
+				cursorIndex: characterIndex,
+			});
+		}
 	}
 
 	updateCursorPosition(i) {
@@ -87,32 +97,33 @@ class UIInput extends Component {
 		return this.validHandlers.some(handler => handler === el);
 	}
 
-	render() {
-		const { isFocused, characters, cursorIndex } = this.state;
-		let result = null;
-		this.validHandlers = [];
-		this.validHandlers.length = 0;
-		result = characters.map((char, i) => (
-			<div
+	renderInputValue(state) {
+		const { isFocused, cursorIndex, characters } = state;
+		const inputValue = characters.map((char, i) => (
+			<UICharacter
 				key={`ui-char-${char}${i}`}
-				className="ncss-brand ui-input-character"
-				ref={(character) => { this.validHandlers.push(character); }}
+				onRef={(characterEl) => { this.validHandlers.push(characterEl); }}
 				onClick={e => this.handleCharacterClick(e, i)}
-			>
-				{char}
-			</div>
+				value={char}
+			/>
 		));
 		if (isFocused) {
-			result.splice(cursorIndex, 0, <UICursor key="ui-cursor" />);
+			inputValue.splice(cursorIndex, 0, <UICursor key="ui-cursor" />);
 		}
+		return inputValue;
+	}
+
+	render() {
+		this.validHandlers = [];
+		this.validHandlers.length = 0;
 		return (
 			<div {...this.props} className={cx(['ui-input', this.props.className])}>
 				<div
-					ref={(textzone) => { this.validHandlers.push(textzone); }}
+					ref={(textzoneEl) => { this.validHandlers.push(textzoneEl); }}
 					className="ui-input-textzone"
 					onClick={this.handleTextzoneClick}
 				>
-					{result}
+					{this.renderInputValue(this.state)}
 				</div>
 			</div>
 		);
