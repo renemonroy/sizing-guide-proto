@@ -9,12 +9,18 @@ class UIInput extends Component {
 		super(props);
 		this.state = {
 			isFocused: false,
-			characters: ['2', '6', '.', '2'],
+			characters: ['6', '2'],
 			cursorIndex: 0,
 		};
 		this.handleTextzoneClick = this.handleTextzoneClick.bind(this);
 		this.handleTextzoneUnfocus = this.handleTextzoneUnfocus.bind(this);
 		this.handleCharacterClick = this.handleCharacterClick.bind(this);
+	}
+
+	componentDidMount() {
+		setTimeout(() => {
+			this.write('a');
+		}, 5000);
 	}
 
 	componentWillUnmount() {
@@ -54,6 +60,20 @@ class UIInput extends Component {
 			document.removeEventListener('click', this.handleTextzoneUnfocus);
 			this.setState({ isFocused: false });
 		}
+	}
+
+	write(character) {
+		const { isFocused, cursorIndex, characters } = this.state;
+		let characterIndex = characters.length;
+		if (isFocused) {
+			characterIndex = cursorIndex;
+		}
+		const newCharacters = characters.slice();
+		newCharacters.splice(characterIndex, 0, character);
+		this.setState({
+			characters: newCharacters,
+			cursorIndex: characterIndex + 1,
+		});
 	}
 
 	updateCursorPosition(i) {
