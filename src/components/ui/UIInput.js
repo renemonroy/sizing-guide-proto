@@ -34,7 +34,6 @@ class UIInput extends Component {
 	}
 
 	handleCharacterClick(e, i) {
-		console.log('>>> Character click:', i);
 		this.updateCursorPosition(i);
 		e.stopPropagation();
 	}
@@ -69,7 +68,6 @@ class UIInput extends Component {
 	}
 
 	render() {
-		console.log('>>> State:', this.state);
 		const { isFocused, characters, cursorIndex } = this.state;
 		let result = null;
 		this.validHandlers = [];
