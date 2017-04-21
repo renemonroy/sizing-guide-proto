@@ -3,7 +3,7 @@ import { TransitionMotion, spring } from 'react-motion';
 import UICursor from './UICursor';
 import UICharacter from './UICharacter';
 import cx from '../../utilities/className';
-import { easeOut } from '../../constants/SpringPresets';
+import { slowEaseIn } from '../../constants/SpringPresets';
 import './UIInput.styl';
 
 class UIInput extends Component {
@@ -15,13 +15,26 @@ class UIInput extends Component {
 			characters: ['6', '2', '.', '9'],
 			cursorIndex: 0,
 		};
+		this.keyCodes = {
+			space: 32,
+			backspace: 8,
+			leftArrow: 37,
+			rightArrow: 39,
+			suppress: 46,
+			top: 36,
+			end: 35,
+		};
 		this.handleTextzoneClick = this.handleTextzoneClick.bind(this);
 		this.handleTextzoneUnfocus = this.handleTextzoneUnfocus.bind(this);
 		this.handleCharacterClick = this.handleCharacterClick.bind(this);
+		this.handleKeypress = this.handleKeypress.bind(this);
+		this.handleKeydown = this.handleKeydown.bind(this);
 	}
 
 	componentWillUnmount() {
 		document.removeEventListener('click', this.handleTextzoneUnfocus);
+		window.removeEventListener('keypress', this.handleKeypress, false);
+		window.removeEventListener('keydown', this.handleKeydown, false);
 	}
 
 	getDefaultCharacterStyles() {
@@ -37,7 +50,7 @@ class UIInput extends Component {
 		const { characters } = this.state;
 		return characters.map(character => ({
 			key: `ui-char-${character}`,
-			style: { opacity: spring(1, easeOut) },
+			style: { opacity: spring(1, slowEaseIn) },
 			data: { value: character },
 		}));
 	}
@@ -59,10 +72,39 @@ class UIInput extends Component {
 		e.stopPropagation();
 	}
 
+	handleKeypress(e) {
+		e.preventDefault();
+		this.write(String.fromCharCode(e.which));
+	}
+
+	handleKeydown(e) {
+		const { isFocused, cursorIndex, characters } = this.state;
+		if (isFocused) {
+			switch (e.keyCode) {
+			case this.keyCodes.backspace:
+				e.preventDefault();
+				if (characters.length > 0 && cursorIndex > 0) {
+					this.erase(cursorIndex - 1);
+				}
+				break;
+			case this.keyCodes.leftArrow:
+				this.updateCursorPosition(cursorIndex - 1);
+				break;
+			case this.keyCodes.rightArrow:
+				this.updateCursorPosition(cursorIndex + 1);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
 	focus() {
 		const { isFocused, characters } = this.state;
 		if (!isFocused) {
 			document.addEventListener('click', this.handleTextzoneUnfocus);
+			window.addEventListener('keypress', this.handleKeypress, false);
+			window.addEventListener('keydown', this.handleKeydown, false);
 		}
 		this.setState({
 			isFocused: true,
@@ -73,6 +115,8 @@ class UIInput extends Component {
 	unfocus() {
 		if (this.state.isFocused) {
 			document.removeEventListener('click', this.handleTextzoneUnfocus);
+			window.removeEventListener('keypress', this.handleKeypress, false);
+			window.removeEventListener('keydown', this.handleKeydown, false);
 			this.setState({ isFocused: false });
 		}
 	}
@@ -93,22 +137,27 @@ class UIInput extends Component {
 	}
 
 	erase(charIndex, numOfChars = 1) {
-		const { isFocused, cursorIndex, characters } = this.state;
-		const characterIndex = isFocused ? cursorIndex - 1 : charIndex;
+		const { isFocused, characters } = this.state;
+		// const characterIndex = isFocused ? cursorIndex - 1 : charIndex;
 		let newCharacters = null;
+		const state = {};
 		if (characters.length > 0) {
 			newCharacters = characters.slice();
-			newCharacters.splice(characterIndex, numOfChars);
-			this.setState({
-				characters: newCharacters,
-				cursorIndex: characterIndex,
-			});
+			newCharacters.splice(charIndex, numOfChars);
+			state.characters = newCharacters;
+			if (isFocused) {
+				state.cursorIndex = charIndex;
+			}
+			this.setState(state);
 		}
 	}
 
 	updateCursorPosition(i) {
-		if (!this.state.isFocused) {
+		const { isFocused } = this.state;
+		if (!isFocused) {
 			document.addEventListener('click', this.handleTextzoneUnfocus);
+			window.addEventListener('keypress', this.handleKeypress, false);
+			window.addEventListener('keydown', this.handleKeydown, false);
 		}
 		this.setState({ cursorIndex: i, isFocused: true });
 	}
@@ -123,7 +172,10 @@ class UIInput extends Component {
 		this.validHandlers = [];
 		this.validHandlers.length = 0;
 		return (
-			<div {...rest} className={cx(['ui-input', this.props.className])}>
+			<div
+				{...rest}
+				className={cx(['ui-input', this.props.className])}
+			>
 				<TransitionMotion
 					willEnter={() => ({ opacity: 0 })}
 					styles={this.getCharacterStyles()}
