@@ -138,7 +138,6 @@ class UIInput extends Component {
 
 	erase(charIndex, numOfChars = 1) {
 		const { isFocused, characters } = this.state;
-		// const characterIndex = isFocused ? cursorIndex - 1 : charIndex;
 		let newCharacters = null;
 		const state = {};
 		if (characters.length > 0) {
@@ -153,13 +152,18 @@ class UIInput extends Component {
 	}
 
 	updateCursorPosition(i) {
-		const { isFocused } = this.state;
+		const { isFocused, characters } = this.state;
+		const state = {};
 		if (!isFocused) {
 			document.addEventListener('click', this.handleTextzoneUnfocus);
 			window.addEventListener('keypress', this.handleKeypress, false);
 			window.addEventListener('keydown', this.handleKeydown, false);
 		}
-		this.setState({ cursorIndex: i, isFocused: true });
+		state.isFocused = true;
+		if (i <= characters.length && i >= 0) {
+			state.cursorIndex = i;
+		}
+		this.setState(state);
 	}
 
 	isHandler(el) {
