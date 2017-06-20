@@ -5,6 +5,14 @@ import './SizingGuideView.styl';
 
 let isSizingHelpShown = false;
 
+const selectOptions = [
+	{ id: 1, name: 'MEN', value: 'men' },
+	{ id: 2, name: 'WOMEN', value: 'women' },
+	{ id: 3, name: 'YOUTH', value: 'youth' },
+	{ id: 4, name: 'LENGTH (CM)', value: 'length-cm' },
+	{ id: 5, name: 'LENGTH (IN)', value: 'length-in' },
+];
+
 class SizingGuideView extends Component {
 	constructor(props) {
 		super(props);
@@ -22,7 +30,10 @@ class SizingGuideView extends Component {
 	render() {
 		return (
 			<UIView name="sizing-guide-view">
-				<UISelect />
+				<UISelect
+					options={selectOptions}
+					onChange={(item) => { console.log(item); }}
+				/>
 			</UIView>
 		);
 	}

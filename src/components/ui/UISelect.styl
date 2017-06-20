@@ -1,0 +1,23 @@
+.ui-select
+	overflow: hidden
+	position: relative
+	font-size: 21px
+
+	.ui-select-option
+		height: 36px
+		padding-left: 15px
+
+	.ui-select-mask
+		position: absolute
+		width: 100%
+		z-index: 10
+		pointer-events: none
+		-webkit-transform: translateZ(0)
+
+	.top-mask
+		top: 0
+		background: -webkit-gradient(linear,left bottom,left top,from(hsla(0,0%,100%,.4)),to(hsla(0,0%,100%,.8)))
+	
+	.bottom-mask
+		bottom: 0
+		background: -webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,.4)),to(hsla(0,0%,100%,.8)))
