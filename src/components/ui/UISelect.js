@@ -57,7 +57,7 @@ class UISelect extends Component {
 						{options.length > 0 ? (
 							options.map(({ id, name }) => (
 								<li key={`ui-select-option-${id}`} className="ui-select-option">
-									<span className="ui-select-name">{name}</span>
+									<h3 className="ncss-brand ui-select-name u-align-center">{name}</h3>
 								</li>
 							))
 						) : null}
