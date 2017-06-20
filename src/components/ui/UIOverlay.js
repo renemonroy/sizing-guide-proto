@@ -32,7 +32,7 @@ const UIOverlay = ({ children, active, closeOverlay }) => (
 		willEnter={overlayWillEnter}
 		willLeave={overlayWillLeave}
 	>
-		{interpolatedStyles =>
+		{interpolatedStyles => (
 			<div className="ui-overlay-wrapper">
 				{interpolatedStyles.map(config => (
 					<div
@@ -53,7 +53,7 @@ const UIOverlay = ({ children, active, closeOverlay }) => (
 					</div>
 				))}
 			</div>
-		}
+		)}
 	</TransitionMotion>
 );
 

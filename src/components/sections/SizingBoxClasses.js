@@ -14,6 +14,8 @@ export default {
 		'sizing-box-col',
 		'ncss-col-sm-6',
 		'full',
+		'pr2-sm',
+		'pl2-sm',
 	],
 	sizingBoxBtn: [
 		'sizing-box-btn',
@@ -23,6 +25,7 @@ export default {
 		'pt2-sm',
 		'pb2-sm',
 		'u-uppercase',
+		'm0-sm',
 	],
 	sizingBoxBtnLeft: [
 		'sizing-box-btn-left',

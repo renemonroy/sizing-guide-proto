@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Template for bigger projects. Uses router, redux, sagas, immutable and others.",
   "dependencies": {
-    "babel-polyfill": "*",
+    "babel-polyfill": "^6.23.0",
     "better-picker": "^1.1.3",
     "history": "^4.6.1",
     "immutable": "^3.8.1",
@@ -19,6 +19,7 @@
     "redux-saga": "^0.14.3"
   },
   "devDependencies": {
+    "@nike/napp": "^0.2.5",
     "babel-cli": "*",
     "babel-core": "*",
     "babel-eslint": "*",

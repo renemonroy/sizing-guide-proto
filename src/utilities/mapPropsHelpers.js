@@ -11,6 +11,10 @@ export const mapDispatchToProps = dispatch => ({
 				isSizingHelpShown = true;
 			}
 		},
+		openPicker(e) {
+			if (e) e.preventDefault();
+			dispatch(UIActions.activatePicker());
+		},
 	},
 });
 
