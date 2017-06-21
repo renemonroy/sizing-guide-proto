@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import UISelect from './UISelect';
 import { fastEaseIn, fastEaseOut } from '../../constants/SpringPresets';
+import cx from '../../utilities/className';
 
 import './UIPicker.styl';
 
@@ -58,11 +59,11 @@ class UIPicker extends Component {
 	}
 
 	render() {
-		const { options, style } = this.props;
+		const { options, style, className } = this.props;
 		const { active, selectedIndex } = this.state;
 		return (
 			<div className="ui-picker">
-				<button className="ui-picker-trigger" style={style} onClick={this.handleStart}>
+				<button className={cx(['ui-picker-trigger', className])} style={style} onClick={this.handleStart}>
 					{options[selectedIndex].name}
 				</button>
 				<TransitionMotion
@@ -109,6 +110,7 @@ UIPicker.propTypes = {
 	defaultIndex: PropTypes.number,
 	onDone: PropTypes.func,
 	style: PropTypes.object,
+	className: PropTypes.string,
 };
 
 UIPicker.defaultProps = {
@@ -116,6 +118,7 @@ UIPicker.defaultProps = {
 	defaultIndex: 0,
 	onDone: () => {},
 	style: {},
+	className: '',
 };
 
 export default UIPicker;

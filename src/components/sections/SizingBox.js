@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { UIInput } from '../ui';
+import UIPicker from '../ui/UIPicker';
 import cx from '../../utilities/className';
 import cl from './SizingBoxClasses';
 import './SizingBox.styl';
@@ -10,55 +11,12 @@ import './SizingBox.styl';
  */
 
 const metrics = [
-	{ text: 'Men', value: 1 },
-	{ text: 'Women', value: 2 },
-	{ text: 'Youth', value: 3 },
-	{ text: 'Length (cm)', value: 4 },
-	{ text: 'Length (in)', value: 5 },
+	{ id: 1, name: 'Men', value: 'men' },
+	{ id: 2, name: 'Women', value: 'women' },
+	{ id: 3, name: 'Youth', value: 'youth' },
+	{ id: 4, name: 'Length (cm)', value: 'length_cm' },
+	{ id: 5, name: 'Length (in)', value: 'length_in' },
 ];
-
-/**
- * Components used in the main Sizing Box component
- * -----------------------------------------------------------------------------
- */
-
-const SBDivider = () => (
-	<div className={cx(cl.sizingBoxDivider)}>
-		<div className="divider" />
-	</div>
-);
-
-const SBLeftSide = ({ name, onPick }) => (
-	<div className={cx(cl.sizingBoxCol)}>
-		<button
-			className={cx([cl.sizingBoxBtn, cl.sizingBoxBtnLeft])}
-			onClick={onPick}
-		>
-			{ name }
-		</button>
-		<UIInput className={cx([cl.sizingBoxInput, cl.sizingBoxInputLeft])} />
-	</div>
-);
-
-const SBRightSide = ({ name, onPick }) => (
-	<div className={cx(cl.sizingBoxCol)}>
-		<button
-			className={cx([cl.sizingBoxBtn, cl.sizingBoxBtnRight])}
-			onClick={onPick}
-		>
-			{ name }
-		</button>
-		<UIInput className={cx([cl.sizingBoxInput, cl.sizingBoxInputRight])} />
-	</div>
-);
-
-const SBWrapper = ({ children }) => (
-	<div className={cx(cl.sizingBox)}>
-		<div className={cx(cl.sizingBoxRow)}>
-			{ children }
-		</div>
-	</div>
-);
 
 /**
  * Sizing Box component
@@ -72,48 +30,45 @@ class SizingBox extends Component {
 		this.handleRightPick = this.handleRightPick.bind(this);
 	}
 
-	handleLeftPick() {
-		this.leftPicker.show();
+	handleLeftPick(data) {
+		console.log(data);
+		return this;
 	}
 
-	handleRightPick() {
-		this.rightPicker.show();
+	handleRightPick(data) {
+		console.log(data);
+		return this;
 	}
 
 	render() {
 		return (
-			<SBWrapper>
-				<SBLeftSide
-					name="Length (cm)"
-					onPick={this.props}
-				/>
-				<SBRightSide
-					name="Men"
-					onPick={this.handleRightPick}
-				/>
-				<SBDivider />
-			</SBWrapper>
+			<div className={cx(cl.sizingBox)}>
+				<div className={cx(cl.sizingBoxRow)}>
+					<div className={cx(cl.sizingBoxCol)}>
+						<UIPicker
+							className={cx([cl.sizingBoxBtn, cl.sizingBoxBtnLeft])}
+							options={metrics}
+							defaultIndex={1}
+							onDone={this.handleLeftPick}
+						/>
+						<UIInput className={cx([cl.sizingBoxInput, cl.sizingBoxInputLeft])} />
+					</div>
+					<div className={cx(cl.sizingBoxCol)}>
+						<UIPicker
+							className={cx([cl.sizingBoxBtn, cl.sizingBoxBtnRight])}
+							options={metrics}
+							defaultIndex={2}
+							onDone={this.handleRightPick}
+						/>
+						<UIInput className={cx([cl.sizingBoxInput, cl.sizingBoxInputRight])} />
+					</div>
+					<div className={cx(cl.sizingBoxDivider)}>
+						<div className="divider" />
+					</div>
+				</div>
+			</div>
 		);
 	}
 }
-
-/**
- * PropTypes used for the main component and its children
- * -----------------------------------------------------------------------------
- */
-
-SBLeftSide.propTypes = {
-	name: PropTypes.string.isRequired,
-	onPick: PropTypes.func.isRequired,
-};
-
-SBRightSide.propTypes = {
-	name: PropTypes.string.isRequired,
-	onPick: PropTypes.func.isRequired,
-};
-
-SBWrapper.propTypes = {
-	children: PropTypes.any.isRequired,
-};
 
 export default SizingBox;
