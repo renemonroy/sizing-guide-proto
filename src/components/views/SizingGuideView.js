@@ -17,23 +17,28 @@ const selectOptions = [
 class SizingGuideView extends Component {
 	constructor(props) {
 		super(props);
-		this.handleSBOptionsChange = this.handleSBOptionsChange.bind(this);
+		this.onPickerDone = this.onPickerDone.bind(this);
 	}
+
 	componentDidMount() {
 		if (!isSizingHelpShown) {
 			this.props.uiDispatch.openOverlay();
 			isSizingHelpShown = true;
 		}
 	}
-	handleSBOptionsChange() {
-		console.log('hello!', this);
+
+	onPickerDone(data) {
+		console.log('hello!', data);
+		return this;
 	}
+
 	render() {
 		return (
 			<UIView name="sizing-guide-view">
 				<UIPicker
 					options={selectOptions}
 					defaultIndex={2}
+					onDone={this.onPickerDone}
 				/>
 			</UIView>
 		);
