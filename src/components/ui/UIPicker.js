@@ -6,9 +6,11 @@ import './UIPicker.styl';
 class UIPicker extends Component {
 	constructor(props) {
 		super(props);
-		this.selectorIndex = 0;
+		this.selectorIndex = props.defaultIndex;
+		this.tempIndex = this.selectorIndex;
 		this.state = {
 			active: false,
+			selectedIndex: this.selectorIndex,
 		};
 		this.handleActivate = this.handleActivate.bind(this);
 		this.handleDeactivate = this.handleDeactivate.bind(this);
@@ -20,29 +22,35 @@ class UIPicker extends Component {
 	}
 
 	handleDeactivate() {
-		this.setState({ active: false });
+		setTimeout(() => {
+			this.setState({ active: false, selectedIndex: this.tempIndex });
+		}, 500);
 	}
 
-	handleChange(data) {
-		console.log(data);
-		return this;
+	handleChange(data, i) {
+		this.tempIndex = i;
 	}
 
 	render() {
-		const { children, options } = this.props;
-		const { active } = this.state;
+		const { options } = this.props;
+		const { active, selectedIndex } = this.state;
 		return (
 			<div className="ui-picker">
 				<button className="ui-picker-trigger" onClick={this.handleActivate}>
-					{children}
+					{options[selectedIndex].name}
 				</button>
 				{active && options.length > 0 ? (
 					<div className="ui-picker-selector">
 						<div className="ui-picker-mask" />
-						<div className="ui-select-wrapper">
-							<button onClick={this.handleDeactivate}>Done</button>
+						<div className="ui-select-wrapper border-top-dark-grey">
+							<button
+								className="ncss-brand ncss-btn-white ui-picker-deactivate"
+								onClick={this.handleDeactivate}
+							>
+								Done
+							</button>
 							<UISelect
-								defaultIndex={this.selectorIndex}
+								defaultIndex={selectedIndex}
 								options={options}
 								onChange={this.handleChange}
 							/>
@@ -56,14 +64,12 @@ class UIPicker extends Component {
 
 UIPicker.propTypes = {
 	options: PropTypes.arrayOf(PropTypes.object),
-	children: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.number,
-	]).isRequired,
+	defaultIndex: PropTypes.number,
 };
 
 UIPicker.defaultProps = {
 	options: [],
+	defaultIndex: 0,
 };
 
 export default UIPicker;

@@ -31,7 +31,10 @@ class SizingGuideView extends Component {
 	render() {
 		return (
 			<UIView name="sizing-guide-view">
-				<UIPicker options={selectOptions}>Men</UIPicker>
+				<UIPicker
+					options={selectOptions}
+					defaultIndex={2}
+				/>
 			</UIView>
 		);
 	}
