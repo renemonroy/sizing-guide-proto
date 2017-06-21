@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { UIView } from '../ui';
-import UISelect from '../ui/UISelect';
+import UIPicker from '../ui/UIPicker';
+
 import './SizingGuideView.styl';
 
 let isSizingHelpShown = false;
@@ -30,10 +31,7 @@ class SizingGuideView extends Component {
 	render() {
 		return (
 			<UIView name="sizing-guide-view">
-				<UISelect
-					options={selectOptions}
-					onChange={(item) => { console.log(item); }}
-				/>
+				<UIPicker options={selectOptions}>Men</UIPicker>
 			</UIView>
 		);
 	}

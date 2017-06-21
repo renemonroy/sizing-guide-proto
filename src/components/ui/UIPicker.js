@@ -1,68 +1,69 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { TransitionMotion, spring } from 'react-motion';
-import UIPlaceholder from './UIPlaceholder';
-import { UIActions } from '../../actions';
-import { fastEaseInElastic } from '../../constants/SpringPresets';
+import React, { Component, PropTypes } from 'react';
+import UISelect from './UISelect';
 
-const pickerWillEnter = () => ({
-	bottom: -667,
-});
+import './UIPicker.styl';
 
-const getPickerStyles = active => (
-	active ? [{
-		key: 'ui-overlay',
-		style: {
-			bottom: spring(0, fastEaseInElastic),
-		},
-	}]: []
-);
+class UIPicker extends Component {
+	constructor(props) {
+		super(props);
+		this.selectorIndex = 0;
+		this.state = {
+			active: false,
+		};
+		this.handleActivate = this.handleActivate.bind(this);
+		this.handleDeactivate = this.handleDeactivate.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+	}
 
-const mapDispatchToProps = dispatch => ({
-	closePicker(e) {
-		e.preventDefault();
-		dispatch(UIActions.deactivatePicker());
-	},
-});
+	handleActivate() {
+		this.setState({ active: true });
+	}
 
-const UIPicker = ({ children, active, closePicker }) => (
-	<TransitionMotion
-		styles={() => getPickerStyles(active)}
-		willEnter={pickerWillEnter}
-	>
-		{interpolatedStyles => (
-			<div className="ui-picker-wrapper">
-				{interpolatedStyles.map(config => (
-					<div
-						key={config.key}
-						className="ui-picker"
-					>
-						<div
-							className="ui-picker-content"
-							style={{ bottom: config.style.bottom }}
-						>
-							<div
-								className="ui-picker-background"
-								onClick={closePicker}
+	handleDeactivate() {
+		this.setState({ active: false });
+	}
+
+	handleChange(data) {
+		console.log(data);
+		return this;
+	}
+
+	render() {
+		const { children, options } = this.props;
+		const { active } = this.state;
+		return (
+			<div className="ui-picker">
+				<button className="ui-picker-trigger" onClick={this.handleActivate}>
+					{children}
+				</button>
+				{active && options.length > 0 ? (
+					<div className="ui-picker-selector">
+						<div className="ui-picker-mask" />
+						<div className="ui-select-wrapper">
+							<button onClick={this.handleDeactivate}>Done</button>
+							<UISelect
+								defaultIndex={this.selectorIndex}
+								options={options}
+								onChange={this.handleChange}
 							/>
-							{children || <UIPlaceholder />}
 						</div>
 					</div>
-				))}
+				) : null}
 			</div>
-		)}
-	</TransitionMotion>
-);
+		);
+	}
+}
 
 UIPicker.propTypes = {
-	children: PropTypes.any,
-	active: PropTypes.bool,
-	closePicker: PropTypes.func.isRequired,
+	options: PropTypes.arrayOf(PropTypes.object),
+	children: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
+	]).isRequired,
 };
 
 UIPicker.defaultProps = {
-	children: null,
-	active: false,
+	options: [],
 };
 
-export default connect(null, mapDispatchToProps)(UIPicker);
+export default UIPicker;
