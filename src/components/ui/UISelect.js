@@ -15,6 +15,10 @@ class UISelect extends Component {
 		this.startScroller();
 	}
 
+	componentWillUnmount() {
+		this.scroller.destroy();
+	}
+
 	handleScrollerEnd() {
 		const selectedIndex = this.scroller.getSelectedIndex();
 		if (this.currentIndex !== selectedIndex) {
