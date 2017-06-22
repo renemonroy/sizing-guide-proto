@@ -12,7 +12,7 @@ class UIInput extends Component {
 		super(props);
 		this.state = {
 			isFocused: false,
-			characters: ['6', '2', '.', '9'],
+			characters: props.value.toString(10).split(''),
 			cursorIndex: 0,
 		};
 		this.keyCodes = {
@@ -39,8 +39,8 @@ class UIInput extends Component {
 
 	getDefaultCharacterStyles() {
 		const { characters } = this.state;
-		return characters.map(character => ({
-			key: `ui-char-${character}`,
+		return characters.map((character, i) => ({
+			key: `ui-char-${i}-${character}`,
 			style: { opacity: 1 },
 			data: { value: character },
 		}));
@@ -48,8 +48,8 @@ class UIInput extends Component {
 
 	getCharacterStyles() {
 		const { characters } = this.state;
-		return characters.map(character => ({
-			key: `ui-char-${character}`,
+		return characters.map((character, i) => ({
+			key: `ui-char-${i}-${character}`,
 			style: { opacity: spring(1, slowEaseIn) },
 			data: { value: character },
 		}));
@@ -216,10 +216,15 @@ class UIInput extends Component {
 
 UIInput.propTypes = {
 	className: PropTypes.string,
+	value: PropTypes.oneOfType([
+		PropTypes.number,
+		PropTypes.string,
+	]),
 };
 
 UIInput.defaultProps = {
 	className: '',
+	value: 26.9,
 };
 
 export default UIInput;

@@ -59,8 +59,8 @@ class UISelect extends Component {
 						style={{ marginTop: padding }}
 					>
 						{options.length > 0 ? (
-							options.map(({ id, name }) => (
-								<li key={`ui-select-option-${id}`} className="ui-select-option">
+							options.map(({ value, name }) => (
+								<li key={`ui-select-option-${value}`} className="ui-select-option">
 									<h3 className="ncss-brand ui-select-name u-align-center">{name}</h3>
 								</li>
 							))

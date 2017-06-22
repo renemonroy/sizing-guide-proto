@@ -5,34 +5,74 @@ import cx from '../../utilities/className';
 import cl from './SizingBoxClasses';
 import './SizingBox.styl';
 
-/**
- * Data used by each picker
- * -----------------------------------------------------------------------------
- */
-
 const metrics = [
-	{ id: 1, name: 'Men', value: 'men' },
-	{ id: 2, name: 'Women', value: 'women' },
-	{ id: 3, name: 'Youth', value: 'youth' },
-	{ id: 4, name: 'Length (cm)', value: 'length_cm' },
-	{ id: 5, name: 'Length (in)', value: 'length_in' },
+	{
+		type: 'cm',
+		name: 'Length (cm)',
+		formula: woman => Math.round(((woman - 1 + 22) / 3) * 254) / 100,
+	},
+	{
+		type: 'inch',
+		name: 'Length (in)',
+		formula: cm => Math.round((cm / 2.54) * 100) / 100,
+	},
+	{
+		type: 'men',
+		name: 'Men',
+		formula: inch => Math.round(((inch * 3) - 22) * 2) / 2,
+	},
+	{
+		type: 'women',
+		name: 'Women',
+		formula: man => man + 1,
+	},
 ];
 
-/**
- * Sizing Box component
- * -----------------------------------------------------------------------------
- */
+const getConversionsFrom = (value, metric) => {
+	const indexOfMetric = metrics.findIndex(m => m.type === metric);
+	const sizeOfMetrics = metrics.length;
+	const conversions = {};
+	let tempValue = value;
+	conversions[metric] = value;
+	for (let i=0; i<sizeOfMetrics; i+=1) {
+		const curr = (i + indexOfMetric + 1) % sizeOfMetrics;
+		if (metrics[curr].type !== metric) {
+			conversions[metrics[curr].type] = metrics[curr].formula(tempValue);
+			tempValue = conversions[metrics[curr].type];
+		}
+	}
+	return conversions;
+};
+
+const options = metrics.map((metric) => {
+	const newMetric = Object.assign({}, metric);
+	newMetric.value = metric.type;
+	delete newMetric.type;
+	delete newMetric.formula;
+	return newMetric;
+});
+
+const findIndexOfType = type => options.findIndex(opt => opt.value === type);
 
 class SizingBox extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			leftType: 'cm',
+			leftValue: 26.2,
+			rightType: 'men',
+			rightValue: 9,
+		};
 		this.handleLeftPick = this.handleLeftPick.bind(this);
 		this.handleRightPick = this.handleRightPick.bind(this);
 	}
 
 	handleLeftPick(data) {
+		const { leftValue, rightType } = this.state;
+		const conversions = getConversionsFrom(leftValue, data.value);
 		console.log(data);
-		return this;
+		console.log(conversions);
+		this.setState({ rightValue: conversions[rightType] });
 	}
 
 	handleRightPick(data) {
@@ -41,26 +81,36 @@ class SizingBox extends Component {
 	}
 
 	render() {
+		const { leftType, leftValue, rightType, rightValue } = this.state;
+		console.log(this.state);
 		return (
 			<div className={cx(cl.sizingBox)}>
 				<div className={cx(cl.sizingBoxRow)}>
 					<div className={cx(cl.sizingBoxCol)}>
 						<UIPicker
 							className={cx([cl.sizingBoxBtn, cl.sizingBoxBtnLeft])}
-							options={metrics}
-							defaultIndex={1}
+							options={options}
+							defaultIndex={findIndexOfType(leftType)}
 							onDone={this.handleLeftPick}
 						/>
-						<UIInput className={cx([cl.sizingBoxInput, cl.sizingBoxInputLeft])} />
+						<UIInput
+							key={`ui-input-${leftValue}`}
+							className={cx([cl.sizingBoxInput, cl.sizingBoxInputLeft])}
+							value={leftValue}
+						/>
 					</div>
 					<div className={cx(cl.sizingBoxCol)}>
 						<UIPicker
 							className={cx([cl.sizingBoxBtn, cl.sizingBoxBtnRight])}
-							options={metrics}
-							defaultIndex={2}
+							options={options}
+							defaultIndex={findIndexOfType(rightType)}
 							onDone={this.handleRightPick}
 						/>
-						<UIInput className={cx([cl.sizingBoxInput, cl.sizingBoxInputRight])} />
+						<UIInput
+							key={`ui-input-${rightValue}`}
+							className={cx([cl.sizingBoxInput, cl.sizingBoxInputRight])}
+							value={rightValue}
+						/>
 					</div>
 					<div className={cx(cl.sizingBoxDivider)}>
 						<div className="divider" />
