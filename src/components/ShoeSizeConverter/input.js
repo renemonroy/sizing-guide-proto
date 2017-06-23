@@ -4,7 +4,7 @@ import Cursor from './cursor';
 import Character from './character';
 import cx from '../../utilities/className';
 import { slowEaseIn } from '../../constants/SpringPresets';
-import { debounce } from './_helpers';
+import { debounce } from './_utils';
 import './input.styl';
 
 class Input extends Component {
