@@ -6,19 +6,23 @@ import './SizingGuideView.styl';
 let isSizingHelpShown = false;
 
 class SizingGuideView extends Component {
+
 	constructor(props) {
 		super(props);
 		this.handleSBOptionsChange = this.handleSBOptionsChange.bind(this);
 	}
+
 	componentDidMount() {
-		if (!isSizingHelpShown) {
+		if (!isSizingHelpShown && this.props.showHelp) {
 			this.props.uiDispatch.openOverlay();
 			isSizingHelpShown = true;
 		}
 	}
+
 	handleSBOptionsChange() {
 		console.log('hello!', this);
 	}
+
 	render() {
 		return (
 			<UIView name="sizing-guide-view">
@@ -35,6 +39,11 @@ class SizingGuideView extends Component {
 
 SizingGuideView.propTypes = {
 	uiDispatch: PropTypes.object.isRequired,
+	showHelp: PropTypes.bool,
+};
+
+SizingGuideView.defaultProps = {
+	showHelp: false,
 };
 
 export default SizingGuideView;
