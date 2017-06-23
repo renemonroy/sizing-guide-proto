@@ -8,10 +8,12 @@ import './picker.styl';
 
 const selectorWillEnter = () => ({
 	bottom: -667,
+	opacity: 0,
 });
 
 const selectorWillLeave = () => ({
 	bottom: spring(-667, fastEaseOut),
+	opacity: spring(0, fastEaseOut),
 });
 
 const getSelectorStyles = active => (
@@ -19,6 +21,7 @@ const getSelectorStyles = active => (
 		key: 'ssc-selector-styles',
 		style: {
 			bottom: spring(0, fastEaseIn),
+			opacity: spring(0.35, fastEaseIn),
 		},
 	}] : []
 );
@@ -83,6 +86,7 @@ class Picker extends Component {
 										<div
 											className="ssc-picker-selector-mask"
 											onClick={this.handleCancel}
+											style={{ backgroundColor: `rgba(0, 0, 0, ${config.style.opacity})` }}
 										/>
 										<div className={cx(cl.sscSelectWrapper)} style={wrapperStyles}>
 											<button className={cx(cl.sscPickerDeactivate)} onClick={this.handleDone}>
