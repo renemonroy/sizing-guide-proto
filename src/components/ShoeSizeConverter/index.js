@@ -175,6 +175,7 @@ class ShoeSizeConverter extends Component {
 					</div>
 					<div className={cx(cl.sscDivider)}>
 						<div className="divider" />
+						<i className="ssc-arrow-icon g72-arrow-thick-right" />
 					</div>
 				</div>
 			</div>

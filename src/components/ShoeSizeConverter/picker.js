@@ -63,9 +63,10 @@ class Picker extends Component {
 	render() {
 		const { choices, style, className: cn } = this.props;
 		const { active, index } = this.state;
+		const btnColor = active ? 'ncss-btn-black' : 'ncss-btn-white';
 		return (
 			<div className="ssc-picker">
-				<button className={cx(['ssc-picker-trigger', cn])} style={style} onClick={this.handleStart}>
+				<button className={cx(['ssc-picker-trigger', btnColor, cn])} style={style} onClick={this.handleStart}>
 					{choices[index].name}
 				</button>
 				<TransitionMotion
