@@ -69,13 +69,13 @@ class ShoeSizeConverter extends Component {
 	}
 
 	handleLeftPickDone({ type }) {
-		const { rightMeasure } = this.state;
+		const { leftMeasure, rightMeasure } = this.state;
 		const conversions = getConversionsFromMeasure(rightMeasure.type, rightMeasure.value);
 		console.log(conversions);
 		this.setState({
 			leftMeasure: {
 				type,
-				value: conversions[type],
+				value: type === leftMeasure.type ? leftMeasure.value : conversions[type],
 			},
 			rightMeasure: {
 				type: rightMeasure.type,
@@ -85,7 +85,7 @@ class ShoeSizeConverter extends Component {
 	}
 
 	handleRightPickDone({ type }) {
-		const { leftMeasure } = this.state;
+		const { leftMeasure, rightMeasure } = this.state;
 		const conversions = getConversionsFromMeasure(leftMeasure.type, leftMeasure.value);
 		console.log(conversions);
 		this.setState({
@@ -95,7 +95,7 @@ class ShoeSizeConverter extends Component {
 			},
 			rightMeasure: {
 				type,
-				value: conversions[type],
+				value: type === rightMeasure.type ? rightMeasure.value : conversions[type],
 			},
 		});
 	}
@@ -138,11 +138,14 @@ class ShoeSizeConverter extends Component {
 
 	render() {
 		const { leftMeasure, rightMeasure } = this.state;
+		const leftPickerIndex = findMeasureIndexFromType(leftMeasure.type);
+		const rightPickerIndex = findMeasureIndexFromType(rightMeasure.type);
 		return (
 			<div className={cx(cl.ssc)}>
 				<div className={cx(cl.sscRow)}>
 					<div className={cx(cl.sscCol)}>
 						<Picker
+							key={`ssc-leftpicker-${leftPickerIndex}`}
 							className={cx([cl.sscBtn, 'ssc-btn-left'])}
 							choices={measures}
 							index={findMeasureIndexFromType(leftMeasure.type)}
@@ -157,6 +160,7 @@ class ShoeSizeConverter extends Component {
 					</div>
 					<div className={cx(cl.sscCol)}>
 						<Picker
+							key={`ssc-rightpicker-${rightPickerIndex}`}
 							className={cx([cl.sscBtn, 'ssc-btn-right'])}
 							choices={measures}
 							index={findMeasureIndexFromType(rightMeasure.type)}

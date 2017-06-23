@@ -11,7 +11,7 @@ class Select extends Component {
 		this.selectEl = null;
 		this.scroller = null;
 		this.index = props.index;
-		this.handleScrollerEnd = this.handleScrollerEnd.bind(this);
+		this.triggerChange = this.triggerChange.bind(this);
 	}
 
 	componentDidMount() {
@@ -26,13 +26,13 @@ class Select extends Component {
 		if (this.selectEl && this.props.choices.length > 0) {
 			this.scroller = new Scroller(this.selectEl, {
 				wheel: true,
-				index: this.index,
+				selectedIndex: this.index,
 			});
-			this.scroller.on('scrollEnd', this.handleScrollerEnd);
+			this.scroller.on('scrollEnd', this.triggerChange);
 		}
 	}
 
-	handleScrollerEnd() {
+	triggerChange() {
 		const index = this.scroller.getSelectedIndex();
 		if (this.index !== index) {
 			this.index = index;

@@ -33,12 +33,17 @@ class Picker extends Component {
 			index: props.index,
 		};
 		this.handleStart = this.handleStart.bind(this);
+		this.handleCancel = this.handleCancel.bind(this);
 		this.handleDone = this.handleDone.bind(this);
 		this.handleSelectChange = this.handleSelectChange.bind(this);
 	}
 
 	handleStart() {
 		this.setState({ active: true });
+	}
+
+	handleCancel() {
+		this.setState({ active: false });
 	}
 
 	handleDone() {
@@ -74,12 +79,19 @@ class Picker extends Component {
 								const wrapperStyles = { bottom: config.style.bottom };
 								return (
 									<div key={config.key} className="ssc-picker-selector">
-										<div className="ssc-picker-selector-mask" />
+										<div
+											className="ssc-picker-selector-mask"
+											onClick={this.handleCancel}
+										/>
 										<div className={cx(cl.sscSelectWrapper)} style={wrapperStyles}>
 											<button className={cx(cl.sscPickerDeactivate)} onClick={this.handleDone}>
 												Done
 											</button>
-											<Select choices={choices} index={index} onChange={this.handleSelectChange} />
+											<Select
+												choices={choices}
+												index={index}
+												onChange={this.handleSelectChange}
+											/>
 										</div>
 									</div>
 								);
@@ -96,7 +108,7 @@ class Picker extends Component {
 
 Picker.propTypes = {
 	choices: PropTypes.arrayOf(PropTypes.object),
-	index: PropTypes.number,
+	index: PropTypes.number.isRequired,
 	onDone: PropTypes.func,
 	style: PropTypes.object,
 	className: PropTypes.string,
@@ -104,7 +116,6 @@ Picker.propTypes = {
 
 Picker.defaultProps = {
 	choices: [],
-	index: 0,
 	onDone: () => {},
 	style: {},
 	className: '',
