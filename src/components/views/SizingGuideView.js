@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { UIView } from '../ui';
-import { SizingBox } from '../sections';
+import ShoeSizeConverter from '../ShoeSizeConverter';
 import './SizingGuideView.styl';
 
 let isSizingHelpShown = false;
@@ -22,7 +22,7 @@ class SizingGuideView extends Component {
 	render() {
 		return (
 			<UIView name="sizing-guide-view">
-				<SizingBox />
+				<ShoeSizeConverter />
 			</UIView>
 		);
 	}
