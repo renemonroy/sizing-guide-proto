@@ -22,7 +22,12 @@ class SizingGuideView extends Component {
 	render() {
 		return (
 			<UIView name="sizing-guide-view">
-				<ShoeSizeConverter />
+				<h2 className="ncss-brand fs22-sm u-uppercase pb4-sm">Shoe Size Converter</h2>
+				<p>Use your measurements and the tool below to determine your shoe size.</p>
+				<div className="tool-wrapper">
+					<ShoeSizeConverter />
+				</div>
+				<p className="u-align-center fs12-sm text-color-grey">© 2017 Nike, Inc. All Rights Reserved.</p>
 			</UIView>
 		);
 	}

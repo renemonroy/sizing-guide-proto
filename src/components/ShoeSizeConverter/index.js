@@ -70,7 +70,9 @@ class ShoeSizeConverter extends Component {
 
 	handleLeftPickDone({ type }) {
 		const { leftMeasure, rightMeasure } = this.state;
-		const conversions = getConversionsFromMeasure(rightMeasure.type, rightMeasure.value);
+		let conversions = null;
+		if (isNaN(rightMeasure.value)) return;
+		conversions = getConversionsFromMeasure(rightMeasure.type, rightMeasure.value);
 		console.log(conversions);
 		this.setState({
 			leftMeasure: {
@@ -86,7 +88,9 @@ class ShoeSizeConverter extends Component {
 
 	handleRightPickDone({ type }) {
 		const { leftMeasure, rightMeasure } = this.state;
-		const conversions = getConversionsFromMeasure(leftMeasure.type, leftMeasure.value);
+		let conversions = null;
+		if (isNaN(leftMeasure.value)) return;
+		conversions = getConversionsFromMeasure(leftMeasure.type, leftMeasure.value);
 		console.log(conversions);
 		this.setState({
 			leftMeasure: {
@@ -103,7 +107,9 @@ class ShoeSizeConverter extends Component {
 	handleLeftInputChange(val) {
 		const value = Number(val);
 		const { leftMeasure, rightMeasure } = this.state;
-		const conversions = getConversionsFromMeasure(leftMeasure.type, value);
+		let conversions = null;
+		if (isNaN(value)) return;
+		conversions = getConversionsFromMeasure(leftMeasure.type, value);
 		console.log(conversions);
 		this.setState({
 			leftMeasure: {
@@ -115,13 +121,14 @@ class ShoeSizeConverter extends Component {
 				value: conversions[rightMeasure.type],
 			},
 		});
-		return this;
 	}
 
 	handleRightInputChange(val) {
 		const value = Number(val);
 		const { leftMeasure, rightMeasure } = this.state;
-		const conversions = getConversionsFromMeasure(rightMeasure.type, value);
+		let conversions = null;
+		if (isNaN(value)) return;
+		conversions = getConversionsFromMeasure(rightMeasure.type, value);
 		console.log(conversions);
 		this.setState({
 			leftMeasure: {
@@ -133,7 +140,6 @@ class ShoeSizeConverter extends Component {
 				value,
 			},
 		});
-		return this;
 	}
 
 	render() {
