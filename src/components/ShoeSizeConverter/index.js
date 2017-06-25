@@ -70,7 +70,6 @@ class ShoeSizeConverter extends Component {
 		let conversions = null;
 		if (isNaN(this.leftMeasure.value)) return;
 		conversions = getConversionsFromMeasure(type, this.leftMeasure.value);
-		console.log(conversions);
 		this.leftMeasure.type = type;
 		this.rightMeasure.value = conversions[this.rightMeasure.type];
 		this.setState({
@@ -82,7 +81,6 @@ class ShoeSizeConverter extends Component {
 		let conversions = null;
 		if (isNaN(this.leftMeasure.value)) return;
 		conversions = getConversionsFromMeasure(this.leftMeasure.type, this.leftMeasure.value);
-		console.log(conversions);
 		this.rightMeasure.type = type;
 		this.rightMeasure.value = conversions[type];
 		this.setState({
@@ -96,7 +94,6 @@ class ShoeSizeConverter extends Component {
 		if (isNaN(value)) return;
 		conversions = getConversionsFromMeasure(this.leftMeasure.type, value);
 		this.leftMeasure.value = value;
-		console.log(conversions);
 		this.setState({
 			rightMeasureValue: conversions[this.rightMeasure.type],
 		});
@@ -108,7 +105,6 @@ class ShoeSizeConverter extends Component {
 		if (isNaN(value)) return;
 		conversions = getConversionsFromMeasure(this.rightMeasure.type, value);
 		this.rightMeasure.value = value;
-		console.log(conversions);
 		this.setState({
 			leftMeasureValue: conversions[this.leftMeasure.type],
 		});
