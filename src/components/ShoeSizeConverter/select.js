@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Scroller from 'better-scroll';
 import cx from '../../utilities/className';
 import cl from './_classes';
-import './select.styl';
+import './Select.styl';
 
 class Select extends Component {
 

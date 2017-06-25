@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import cx from '../../utilities/className';
 import cl from './_classes';
-import './character.styl';
+import './Character.styl';
 
 const Character = ({ value, onRef, ...rest }) => (
 	<div {...rest} ref={onRef} className={cx(cl.sscCharacter)}>

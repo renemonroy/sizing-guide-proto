@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { TransitionMotion, spring } from 'react-motion';
-import Cursor from './cursor';
-import Character from './character';
+import Cursor from './Cursor';
+import Character from './Character';
 import cx from '../../utilities/className';
 import { slowEaseIn } from '../../constants/SpringPresets';
 import { debounce } from './_utils';
-import './input.styl';
+import './Input.styl';
 
 class Input extends Component {
 

@@ -3,8 +3,8 @@ import { TransitionMotion, spring } from 'react-motion';
 import { fastEaseIn, fastEaseOut } from '../../constants/SpringPresets';
 import cx from '../../utilities/className';
 import cl from './_classes';
-import Select from './select';
-import './picker.styl';
+import Select from './Select';
+import './Picker.styl';
 
 const selectorWillEnter = () => ({
 	bottom: -667,

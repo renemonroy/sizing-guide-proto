@@ -1,5 +1,5 @@
 import React from 'react';
-import './cursor.styl';
+import './Cursor.styl';
 
 const Cursor = props => (
 	<div {...props} className="ssc-cursor" />

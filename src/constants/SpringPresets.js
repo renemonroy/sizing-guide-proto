@@ -4,5 +4,5 @@ export const fastEaseOut = { stiffness: 330, damping: 28 };
 export const easeInElastic = { stiffness: 141, damping: 7 };
 export const fastEaseInElastic = { stiffness: 230, damping: 19 };
 export const fastEaseOutElastic = { stiffness: 400, damping: 22 };
-export const slowEaseIn = { stiffness: 53, damping: 14 };
+export const slowEaseIn = { stiffness: 136, damping: 13 };
 export const slowEaseOut = { stiffness: 136, damping: 30 };

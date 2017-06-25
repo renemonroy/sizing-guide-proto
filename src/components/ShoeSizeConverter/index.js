@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import cx from '../../utilities/className';
 import cl from './_classes';
-import Picker from './picker';
-import Input from './input';
+import Picker from './Picker';
+import Input from './animations/Input';
 import './index.styl';
 
 const measures = [
@@ -125,10 +125,14 @@ class ShoeSizeConverter extends Component {
 							onDone={this.handleLeftPickDone}
 						/>
 						<Input
-							key={`ssc-input-${leftMeasureType}-${leftMeasureValue}`}
-							className={cx([cl.sscInput, 'ssc-input-left'])}
-							value={leftMeasureValue}
-							onChange={this.handleLeftInputChange}
+							key="left-input"
+							className="ssc-input-left"
+							data={[{
+								id: `ssc-input-${leftMeasureType}-${leftMeasureValue}`,
+								className: cx([cl.sscInput]),
+								value: leftMeasureValue,
+								onChange: this.handleLeftInputChange,
+							}]}
 						/>
 					</div>
 					<div className={cx(cl.sscCol)}>
@@ -139,10 +143,14 @@ class ShoeSizeConverter extends Component {
 							onDone={this.handleRightPickDone}
 						/>
 						<Input
-							key={`ssc-input-${rightMeasureType}-${rightMeasureValue}`}
-							className={cx([cl.sscInput, 'ssc-input-right'])}
-							value={rightMeasureValue}
-							onChange={this.handleRightInputChange}
+							key="right-input"
+							className="ssc-input-right"
+							data={[{
+								id: `ssc-input-${rightMeasureType}-${rightMeasureValue}`,
+								className: cx([cl.sscInput]),
+								value: rightMeasureValue,
+								onChange: this.handleRightInputChange,
+							}]}
 						/>
 					</div>
 					<div className={cx(cl.sscDivider)}>
