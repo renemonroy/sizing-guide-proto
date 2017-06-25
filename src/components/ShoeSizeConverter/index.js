@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import cx from '../../utilities/className';
 import cl from './_classes';
 import Picker from './picker';
@@ -52,15 +52,13 @@ class ShoeSizeConverter extends Component {
 
 	constructor(props) {
 		super(props);
+		this.leftMeasure = props.leftMeasure;
+		this.rightMeasure = props.rightMeasure;
 		this.state = {
-			leftMeasure: {
-				type: 'cm',
-				value: 26.2,
-			},
-			rightMeasure: {
-				type: 'men',
-				value: 9,
-			},
+			leftMeasureType: this.leftMeasure.type,
+			leftMeasureValue: this.leftMeasure.value,
+			rightMeasureType: this.rightMeasure.type,
+			rightMeasureValue: this.rightMeasure.value,
 		};
 		this.handleLeftPickDone = this.handleLeftPickDone.bind(this);
 		this.handleRightPickDone = this.handleRightPickDone.bind(this);
@@ -68,114 +66,160 @@ class ShoeSizeConverter extends Component {
 		this.handleRightInputChange = this.handleRightInputChange.bind(this);
 	}
 
+	// handleLeftPickDone({ type }) {
+	// 	const { leftMeasure, rightMeasure } = this.state;
+	// 	let conversions = null;
+	// 	if (isNaN(rightMeasure.value)) return;
+	// 	conversions = getConversionsFromMeasure(rightMeasure.type, rightMeasure.value);
+	// 	console.log(conversions);
+	// 	this.setState({
+	// 		leftMeasure: {
+	// 			type,
+	// 			value: type === leftMeasure.type ? leftMeasure.value : conversions[type],
+	// 		},
+	// 		rightMeasure: {
+	// 			type: rightMeasure.type,
+	// 			value: rightMeasure.value,
+	// 		},
+	// 	});
+	// }
+
 	handleLeftPickDone({ type }) {
-		const { leftMeasure, rightMeasure } = this.state;
 		let conversions = null;
-		if (isNaN(rightMeasure.value)) return;
-		conversions = getConversionsFromMeasure(rightMeasure.type, rightMeasure.value);
+		if (isNaN(this.leftMeasure.value)) return;
+		conversions = getConversionsFromMeasure(type, this.leftMeasure.value);
 		console.log(conversions);
+		this.leftMeasure.type = type;
+		this.rightMeasure.value = conversions[this.rightMeasure.type];
 		this.setState({
-			leftMeasure: {
-				type,
-				value: type === leftMeasure.type ? leftMeasure.value : conversions[type],
-			},
-			rightMeasure: {
-				type: rightMeasure.type,
-				value: rightMeasure.value,
-			},
+			rightMeasureValue: this.rightMeasure.value,
 		});
 	}
 
+	// handleRightPickDone({ type }) {
+	// 	const { leftMeasure, rightMeasure } = this.state;
+	// 	let conversions = null;
+	// 	if (isNaN(leftMeasure.value)) return;
+	// 	conversions = getConversionsFromMeasure(leftMeasure.type, leftMeasure.value);
+	// 	console.log(conversions);
+	// 	this.setState({
+	// 		leftMeasure: {
+	// 			type: leftMeasure.type,
+	// 			value: leftMeasure.value,
+	// 		},
+	// 		rightMeasure: {
+	// 			type,
+	// 			value: type === rightMeasure.type ? rightMeasure.value : conversions[type],
+	// 		},
+	// 	});
+	// }
+
 	handleRightPickDone({ type }) {
-		const { leftMeasure, rightMeasure } = this.state;
 		let conversions = null;
-		if (isNaN(leftMeasure.value)) return;
-		conversions = getConversionsFromMeasure(leftMeasure.type, leftMeasure.value);
+		if (isNaN(this.leftMeasure.value)) return;
+		conversions = getConversionsFromMeasure(this.leftMeasure.type, this.leftMeasure.value);
 		console.log(conversions);
+		this.rightMeasure.type = type;
+		this.rightMeasure.value = conversions[type];
 		this.setState({
-			leftMeasure: {
-				type: leftMeasure.type,
-				value: leftMeasure.value,
-			},
-			rightMeasure: {
-				type,
-				value: type === rightMeasure.type ? rightMeasure.value : conversions[type],
-			},
+			rightMeasureValue: this.rightMeasure.value,
 		});
 	}
+
+	// handleLeftInputChange(val) {
+	// 	const value = Number(val);
+	// 	const { leftMeasure, rightMeasure } = this.state;
+	// 	let conversions = null;
+	// 	if (isNaN(value)) return;
+	// 	conversions = getConversionsFromMeasure(leftMeasure.type, value);
+	// 	console.log(conversions);
+	// 	this.setState({
+	// 		leftMeasure: {
+	// 			type: leftMeasure.type,
+	// 			value,
+	// 		},
+	// 		rightMeasure: {
+	// 			type: rightMeasure.type,
+	// 			value: conversions[rightMeasure.type],
+	// 		},
+	// 	});
+	// }
 
 	handleLeftInputChange(val) {
 		const value = Number(val);
-		const { leftMeasure, rightMeasure } = this.state;
 		let conversions = null;
 		if (isNaN(value)) return;
-		conversions = getConversionsFromMeasure(leftMeasure.type, value);
+		conversions = getConversionsFromMeasure(this.leftMeasure.type, value);
+		this.leftMeasure.value = value;
 		console.log(conversions);
 		this.setState({
-			leftMeasure: {
-				type: leftMeasure.type,
-				value,
-			},
-			rightMeasure: {
-				type: rightMeasure.type,
-				value: conversions[rightMeasure.type],
-			},
+			rightMeasureValue: conversions[this.rightMeasure.type],
 		});
 	}
 
 	handleRightInputChange(val) {
 		const value = Number(val);
-		const { leftMeasure, rightMeasure } = this.state;
 		let conversions = null;
 		if (isNaN(value)) return;
-		conversions = getConversionsFromMeasure(rightMeasure.type, value);
+		conversions = getConversionsFromMeasure(this.rightMeasure.type, value);
+		this.rightMeasure.value = value;
 		console.log(conversions);
 		this.setState({
-			leftMeasure: {
-				type: leftMeasure.type,
-				value: conversions[leftMeasure.type],
-			},
-			rightMeasure: {
-				type: rightMeasure.type,
-				value,
-			},
+			leftMeasureValue: conversions[this.leftMeasure.type],
 		});
 	}
 
+	// handleRightInputChange(val) {
+	// 	const value = Number(val);
+	// 	const { leftMeasure, rightMeasure } = this.state;
+	// 	let conversions = null;
+	// 	if (isNaN(value)) return;
+	// 	conversions = getConversionsFromMeasure(rightMeasure.type, value);
+	// 	console.log(conversions);
+	// 	this.setState({
+	// 		leftMeasure: {
+	// 			type: leftMeasure.type,
+	// 			value: conversions[leftMeasure.type],
+	// 		},
+	// 		rightMeasure: {
+	// 			type: rightMeasure.type,
+	// 			value,
+	// 		},
+	// 	});
+	// }
+
 	render() {
-		const { leftMeasure, rightMeasure } = this.state;
-		const leftPickerIndex = findMeasureIndexFromType(leftMeasure.type);
-		const rightPickerIndex = findMeasureIndexFromType(rightMeasure.type);
+		const { leftMeasureType, leftMeasureValue, rightMeasureType, rightMeasureValue } = this.state;
+		const leftPickerIndex = findMeasureIndexFromType(leftMeasureType);
+		const rightPickerIndex = findMeasureIndexFromType(rightMeasureType);
 		return (
 			<div className={cx(cl.ssc)}>
 				<div className={cx(cl.sscRow)}>
 					<div className={cx(cl.sscCol)}>
 						<Picker
-							key={`ssc-leftpicker-${leftPickerIndex}`}
 							className={cx([cl.sscBtn, 'ssc-btn-left'])}
 							choices={measures}
-							index={findMeasureIndexFromType(leftMeasure.type)}
+							index={leftPickerIndex}
 							onDone={this.handleLeftPickDone}
 						/>
 						<Input
-							key={`ssc-input-${leftMeasure.type}-${leftMeasure.value}`}
+							key={`ssc-input-${leftMeasureType}-${leftMeasureValue}`}
 							className={cx([cl.sscInput, 'ssc-input-left'])}
-							value={leftMeasure.value}
+							value={leftMeasureValue}
 							onChange={this.handleLeftInputChange}
 						/>
 					</div>
 					<div className={cx(cl.sscCol)}>
 						<Picker
-							key={`ssc-rightpicker-${rightPickerIndex}`}
 							className={cx([cl.sscBtn, 'ssc-btn-right'])}
 							choices={measures}
-							index={findMeasureIndexFromType(rightMeasure.type)}
+							index={rightPickerIndex}
 							onDone={this.handleRightPickDone}
 						/>
 						<Input
-							key={`ssc-input-${rightMeasure.type}-${rightMeasure.value}`}
+							key={`ssc-input-${rightMeasureType}-${rightMeasureValue}`}
 							className={cx([cl.sscInput, 'ssc-input-right'])}
-							value={rightMeasure.value}
+							value={rightMeasureValue}
 							onChange={this.handleRightInputChange}
 						/>
 					</div>
@@ -189,5 +233,21 @@ class ShoeSizeConverter extends Component {
 	}
 
 }
+
+ShoeSizeConverter.propTypes = {
+	leftMeasure: PropTypes.object,
+	rightMeasure: PropTypes.object,
+};
+
+ShoeSizeConverter.defaultProps = {
+	leftMeasure: {
+		type: 'cm',
+		value: 26.2,
+	},
+	rightMeasure: {
+		type: 'men',
+		value: 9,
+	},
+};
 
 export default ShoeSizeConverter;
