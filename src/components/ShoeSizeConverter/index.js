@@ -66,24 +66,6 @@ class ShoeSizeConverter extends Component {
 		this.handleRightInputChange = this.handleRightInputChange.bind(this);
 	}
 
-	// handleLeftPickDone({ type }) {
-	// 	const { leftMeasure, rightMeasure } = this.state;
-	// 	let conversions = null;
-	// 	if (isNaN(rightMeasure.value)) return;
-	// 	conversions = getConversionsFromMeasure(rightMeasure.type, rightMeasure.value);
-	// 	console.log(conversions);
-	// 	this.setState({
-	// 		leftMeasure: {
-	// 			type,
-	// 			value: type === leftMeasure.type ? leftMeasure.value : conversions[type],
-	// 		},
-	// 		rightMeasure: {
-	// 			type: rightMeasure.type,
-	// 			value: rightMeasure.value,
-	// 		},
-	// 	});
-	// }
-
 	handleLeftPickDone({ type }) {
 		let conversions = null;
 		if (isNaN(this.leftMeasure.value)) return;
@@ -96,24 +78,6 @@ class ShoeSizeConverter extends Component {
 		});
 	}
 
-	// handleRightPickDone({ type }) {
-	// 	const { leftMeasure, rightMeasure } = this.state;
-	// 	let conversions = null;
-	// 	if (isNaN(leftMeasure.value)) return;
-	// 	conversions = getConversionsFromMeasure(leftMeasure.type, leftMeasure.value);
-	// 	console.log(conversions);
-	// 	this.setState({
-	// 		leftMeasure: {
-	// 			type: leftMeasure.type,
-	// 			value: leftMeasure.value,
-	// 		},
-	// 		rightMeasure: {
-	// 			type,
-	// 			value: type === rightMeasure.type ? rightMeasure.value : conversions[type],
-	// 		},
-	// 	});
-	// }
-
 	handleRightPickDone({ type }) {
 		let conversions = null;
 		if (isNaN(this.leftMeasure.value)) return;
@@ -125,25 +89,6 @@ class ShoeSizeConverter extends Component {
 			rightMeasureValue: this.rightMeasure.value,
 		});
 	}
-
-	// handleLeftInputChange(val) {
-	// 	const value = Number(val);
-	// 	const { leftMeasure, rightMeasure } = this.state;
-	// 	let conversions = null;
-	// 	if (isNaN(value)) return;
-	// 	conversions = getConversionsFromMeasure(leftMeasure.type, value);
-	// 	console.log(conversions);
-	// 	this.setState({
-	// 		leftMeasure: {
-	// 			type: leftMeasure.type,
-	// 			value,
-	// 		},
-	// 		rightMeasure: {
-	// 			type: rightMeasure.type,
-	// 			value: conversions[rightMeasure.type],
-	// 		},
-	// 	});
-	// }
 
 	handleLeftInputChange(val) {
 		const value = Number(val);
@@ -168,25 +113,6 @@ class ShoeSizeConverter extends Component {
 			leftMeasureValue: conversions[this.leftMeasure.type],
 		});
 	}
-
-	// handleRightInputChange(val) {
-	// 	const value = Number(val);
-	// 	const { leftMeasure, rightMeasure } = this.state;
-	// 	let conversions = null;
-	// 	if (isNaN(value)) return;
-	// 	conversions = getConversionsFromMeasure(rightMeasure.type, value);
-	// 	console.log(conversions);
-	// 	this.setState({
-	// 		leftMeasure: {
-	// 			type: leftMeasure.type,
-	// 			value: conversions[leftMeasure.type],
-	// 		},
-	// 		rightMeasure: {
-	// 			type: rightMeasure.type,
-	// 			value,
-	// 		},
-	// 	});
-	// }
 
 	render() {
 		const { leftMeasureType, leftMeasureValue, rightMeasureType, rightMeasureValue } = this.state;
