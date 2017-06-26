@@ -127,12 +127,9 @@ class ShoeSizeConverter extends Component {
 						<Input
 							key="left-input"
 							className="ssc-input-left"
-							data={[{
-								id: `ssc-input-${leftMeasureType}-${leftMeasureValue}`,
-								className: cx([cl.sscInput]),
-								value: leftMeasureValue,
-								onChange: this.handleLeftInputChange,
-							}]}
+							id={`ssc-input-${leftMeasureType}-${leftMeasureValue}`}
+							value={leftMeasureValue}
+							onChange={this.handleLeftInputChange}
 						/>
 					</div>
 					<div className={cx(cl.sscCol)}>
@@ -145,12 +142,9 @@ class ShoeSizeConverter extends Component {
 						<Input
 							key="right-input"
 							className="ssc-input-right"
-							data={[{
-								id: `ssc-input-${rightMeasureType}-${rightMeasureValue}`,
-								className: cx([cl.sscInput]),
-								value: rightMeasureValue,
-								onChange: this.handleRightInputChange,
-							}]}
+							id={`ssc-input-${rightMeasureType}-${rightMeasureValue}`}
+							value={rightMeasureValue}
+							onChange={this.handleRightInputChange}
 						/>
 					</div>
 					<div className={cx(cl.sscDivider)}>

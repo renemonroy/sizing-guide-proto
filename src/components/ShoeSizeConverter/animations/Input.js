@@ -2,8 +2,11 @@ import React, { PropTypes } from 'react';
 import { TransitionMotion, spring } from 'react-motion';
 import { slowEaseIn, slowEaseOut } from '../../../constants/SpringPresets';
 import cx from '../../../utilities/className';
+import cl from '../_classes';
 import Input from '../Input';
 import './Input.styl';
+
+const inputsList = [];
 
 const willEnter = () => ({
 	top: -80,
@@ -15,50 +18,48 @@ const willLeave = () => ({
 	opacity: spring(0.5, slowEaseOut),
 });
 
-const styles = allData => (allData.map(data => ({
-	key: data.id,
+const styles = allInputs => (allInputs.map(inputData => ({
+	key: inputData.id,
 	style: {
 		top: spring(0, slowEaseIn),
 		opacity: spring(1, slowEaseIn),
 	},
-	data,
+	data: inputData,
 })));
 
-const AnimateInput = ({ data, className }) => (
-	<TransitionMotion
-		willEnter={willEnter}
-		willLeave={willLeave}
-		styles={styles(data)}
-	>
-		{interpolatedStyles => (
-			<div className={cx(['ssc-input-animator', className])}>
-				{interpolatedStyles.map(({ key, data: d, style }) => (
-					<div key={key} className="ssc-input-wrapper">
-						<Input
-							className={d.className}
-							style={style}
-							value={d.value}
-							onChange={d.onChange}
-						/>
-					</div>
-				))}
-			</div>
-		)}
-	</TransitionMotion>
-);
+const AnimateInput = ({ className, ...rest }) => {
+	inputsList[0] = Object.assign({}, rest);
+	return (
+		<TransitionMotion
+			willEnter={willEnter}
+			willLeave={willLeave}
+			styles={styles(inputsList)}
+		>
+			{interpolatedStyles => (
+				<div className={cx(['ssc-input-animator', className])}>
+					{interpolatedStyles.map(({ key, data, style }) => (
+						<div key={key} className="ssc-input-wrapper">
+							<Input
+								className={cx(cl.sscInput)}
+								style={style}
+								value={data.value}
+								onChange={data.onChange}
+							/>
+						</div>
+					))}
+				</div>
+			)}
+		</TransitionMotion>
+	);
+};
 
 AnimateInput.propTypes = {
-	data: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			className: PropTypes.string.isRequired,
-			value: PropTypes.oneOfType([
-				PropTypes.string,
-				PropTypes.number,
-			]).isRequired,
-			onChange: PropTypes.func.isRequired,
-		}).isRequired,
-	).isRequired,
+	id: PropTypes.string.isRequired,
+	value: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
+	]).isRequired,
+	onChange: PropTypes.func.isRequired,
 	className: PropTypes.string,
 };
 
